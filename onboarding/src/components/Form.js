@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Field, withFormik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import styled from 'styled-components';
+
+const UserDiv = styled.div`
+display: flex;
+flex-direction: column;
+`;
+
 
 const NewUser = ({ errors, touched, values, status }) => {
   const [users, setUsers] = useState([]);
@@ -10,25 +17,29 @@ const NewUser = ({ errors, touched, values, status }) => {
   }, [status]);
 
   return (
-    <div>
+    <UserDiv>
       <h1>New User</h1>
-      <Form>
-        <Field type="text" name="name" placeholder="Name" />
+      <Form style={{fontSize: "1.8rem"}}>
+        <Field type="text" name="name" placeholder="Name"  />
         {touched.name && errors.name && <p className="error">{errors.name}</p>}
+        <br></br><br></br>
         <Field type="email" name="email" placeholder="Email" />
         {touched.email && errors.email && (
           <p className="error">{errors.email}</p>
         )}
+        <br></br><br></br>
         <Field type="password" name="password" placeholder="Password" />
         {touched.password && errors.password && (
           <p className="error">{errors.password}</p>
         )}
+        <br></br><br></br>
         <label className='checkbox-container'>
             {' '}
             Terms of Service
           <Field type="checkbox" name="terms" checked={values.terms} />
           <span className="checkmark" />
         </label>
+        <br></br><br></br>
         <button type="submit">Submit!</button>
       </Form>
 
@@ -39,7 +50,7 @@ const NewUser = ({ errors, touched, values, status }) => {
           <li>Password: {user.password}</li>
         </ul>
       ))}
-    </div>
+    </UserDiv>
   );
 };
 
