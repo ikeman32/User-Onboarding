@@ -62,7 +62,24 @@ const FormikNewUser = withFormik({
       password: password || "",
       terms: terms || false
     };
+  },
+
+  validationSchema: Yup.object().shape({
+    name: Yup.string().required('A name is required'),
+    email: Yup.string().required('Please enter and Email'),
+    password: Yup.string().required('Enter a password'),
+    terms: Yup.boolean().oneOf([true]).required('You must accept Terms of Service')
+  }),
+
+  handleSubmit(values, {setStatus}){
+    axios 
+      .post('https://reqres.in/api/users', values)
+      .then(res =>{
+        setStatus(res.data);
+        console.log(res);
+      })
+      .catch(err=> console.log(err.response));
   }
 })(NewUser);
-
+console.log("This is the HOC", FormikNewUser);
 export default FormikNewUser;
